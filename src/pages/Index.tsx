@@ -346,12 +346,10 @@ const Index = () => {
   );
 };
 
-const testimonials = [
-  { quote: "Fatimah captured our event beautifully. Every frame told a story we didn't even know was there.", name: "Amina R.", role: "Event Organizer" },
-  { quote: "Working with Phaedra Films was an absolute dream. The final product exceeded all expectations.", name: "David K.", role: "Brand Director" },
-  { quote: "She has an incredible eye for detail and a gift for making people feel comfortable on camera.", name: "Sarah M.", role: "Non-Profit Lead" },
-  { quote: "The documentary she produced for our community project brought real change. Powerful storytelling.", name: "James O.", role: "Community Director" },
-  { quote: "Professional, creative, and deeply passionate about her craft. Highly recommend Phaedra Films.", name: "Lila T.", role: "Marketing Manager" },
+const fallbackTestimonials = [
+  { quote: "Fatimah captured our event beautifully. Every frame told a story we didn't even know was there.", client_name: "Amina R.", role: "Event Organizer" },
+  { quote: "Working with Phaedra Films was an absolute dream. The final product exceeded all expectations.", client_name: "David K.", role: "Brand Director" },
+  { quote: "She has an incredible eye for detail and a gift for making people feel comfortable on camera.", client_name: "Sarah M.", role: "Non-Profit Lead" },
 ];
 
 const TestimonialsSlider = () => {
@@ -359,17 +357,34 @@ const TestimonialsSlider = () => {
   const [direction, setDirection] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  const { data: dbTestimonials } = useQuery({
+    queryKey: ["testimonials"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("testimonials").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const testimonials = dbTestimonials && dbTestimonials.length > 0
+    ? dbTestimonials.map(t => ({ quote: t.quote, client_name: t.client_name, role: t.role }))
+    : fallbackTestimonials;
+
   const startAutoplay = useCallback(() => {
     intervalRef.current = setInterval(() => {
       setDirection(1);
       setCurrent((prev) => (prev + 1) % testimonials.length);
     }, 5000);
-  }, []);
+  }, [testimonials.length]);
 
   useEffect(() => {
     startAutoplay();
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [startAutoplay]);
+
+  useEffect(() => {
+    if (current >= testimonials.length) setCurrent(0);
+  }, [testimonials.length, current]);
 
   const go = (dir: number) => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -384,6 +399,8 @@ const TestimonialsSlider = () => {
     exit: (d: number) => ({ x: d > 0 ? -300 : 300, opacity: 0, scale: 0.95 }),
   };
 
+  const item = testimonials[current];
+
   return (
     <section className="py-20 md:py-32 bg-card/50 relative overflow-hidden">
       <GeoShapes variant={1} className="opacity-20" />
@@ -391,7 +408,6 @@ const TestimonialsSlider = () => {
         <SectionHeading label="Testimonials" title="What Clients Say" subtitle="Kind words from those I've had the pleasure of working with." />
 
         <div className="max-w-3xl mx-auto">
-          {/* Slider */}
           <div className="relative min-h-[280px] sm:min-h-[240px] flex items-center">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -411,22 +427,21 @@ const TestimonialsSlider = () => {
                   ))}
                 </div>
                 <p className="text-foreground/80 italic text-base md:text-lg leading-relaxed mb-8">
-                  "{testimonials[current].quote}"
+                  "{item?.quote}"
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary text-sm font-bold">{testimonials[current].name[0]}</span>
+                    <span className="text-primary text-sm font-bold">{item?.client_name?.[0]}</span>
                   </div>
                   <div>
-                    <p className="text-foreground font-medium text-sm">{testimonials[current].name}</p>
-                    <p className="text-muted-foreground text-xs font-mono">{testimonials[current].role}</p>
+                    <p className="text-foreground font-medium text-sm">{item?.client_name}</p>
+                    <p className="text-muted-foreground text-xs font-mono">{item?.role}</p>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Controls */}
           <div className="flex items-center justify-center gap-6 mt-8">
             <button
               onClick={() => go(-1)}
@@ -464,5 +479,4 @@ const TestimonialsSlider = () => {
     </section>
   );
 };
-
 export default Index;
