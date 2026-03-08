@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { LayoutDashboard, Image, Briefcase, MessageSquare, Star, Settings, LogOut, Mail, Menu, X } from "lucide-react";
+import { LayoutDashboard, Image, Briefcase, MessageSquare, Star, Settings, LogOut, Mail, Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/phaedra_films_logo.png";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ const navItems = [
   { to: "/admin/testimonials", icon: Star, label: "Testimonials" },
   { to: "/admin/services", icon: Settings, label: "Services" },
   { to: "/admin/content", icon: MessageSquare, label: "Site Content" },
+  { to: "/admin/account", icon: User, label: "Account" },
 ];
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {

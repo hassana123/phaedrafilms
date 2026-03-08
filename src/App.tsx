@@ -6,10 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import Services from "./pages/Services";
 import Portfolio from "./pages/Portfolio";
-import Gallery from "./pages/Gallery";
-import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
@@ -20,6 +17,7 @@ import AdminGallery from "./pages/admin/AdminGallery";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminServices from "./pages/admin/AdminServices";
 import AdminContent from "./pages/admin/AdminContent";
+import AdminAccount from "./pages/admin/AdminAccount";
 
 const queryClient = new QueryClient();
 
@@ -33,10 +31,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
             <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
@@ -46,6 +41,7 @@ const App = () => (
             <Route path="/admin/testimonials" element={<AdminTestimonials />} />
             <Route path="/admin/services" element={<AdminServices />} />
             <Route path="/admin/content" element={<AdminContent />} />
+            <Route path="/admin/account" element={<AdminAccount />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
