@@ -28,12 +28,13 @@ const About = () => {
     queryFn: async () => {
       const { data, error } = await supabase.from("site_content").select("*").eq("section_key", "about").maybeSingle();
       if (error) throw error;
-      return data?.content as { name?: string; about_description?: string } | null;
+      return data?.content as { name?: string; about_description?: string; headshot_image?: string } | null;
     },
   });
 
   const name = aboutContent?.name || "Fatimah Abdulazeez";
   const description = aboutContent?.about_description || "Visual storyteller, voice-over artist, and aspiring filmmaker based in Nigeria. I believe stories, when told well, have the power to move people and shape how we see the world.";
+  const aboutHeadshot = aboutContent?.headshot_image || headshot;
   const nameParts = name.split(" ");
   const firstName = nameParts[0] || "Fatimah";
   const lastName = nameParts.slice(1).join(" ") || "Abdulazeez";
@@ -62,7 +63,7 @@ const About = () => {
                   animate={{ rotate: -360 }}
                   transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
                 />
-                <BlobImage src={headshot} alt={name} className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80" />
+                <BlobImage src={aboutHeadshot} alt={name} className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80" />
               </div>
             </motion.div>
             <motion.div
