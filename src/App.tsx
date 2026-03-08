@@ -14,7 +14,6 @@ import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminPortfolio from "./pages/admin/AdminPortfolio";
-import AdminGallery from "./pages/admin/AdminGallery";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminServices from "./pages/admin/AdminServices";
 import AdminContent from "./pages/admin/AdminContent";
@@ -39,7 +38,6 @@ const App = () => (
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/messages" element={<AdminMessages />} />
             <Route path="/admin/portfolio" element={<AdminPortfolio />} />
-            <Route path="/admin/gallery" element={<AdminGallery />} />
             <Route path="/admin/testimonials" element={<AdminTestimonials />} />
             <Route path="/admin/services" element={<AdminServices />} />
             <Route path="/admin/content" element={<AdminContent />} />
