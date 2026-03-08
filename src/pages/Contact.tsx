@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, Instagram, MapPin, Send } from "lucide-react";
 import Layout from "@/components/Layout";
+import GeoShapes from "@/components/GeoShapes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -39,35 +40,36 @@ const Contact = () => {
 
   return (
     <Layout>
-      <section className="bg-foreground text-background py-20 md:py-28">
-        <div className="container mx-auto px-4 sm:px-6 text-center">
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        <GeoShapes />
+        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="text-primary font-medium tracking-wider uppercase text-sm mb-3">Contact</p>
+            <p className="text-primary font-medium tracking-widest uppercase text-sm mb-3">Contact</p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-6">Let's Work Together</h1>
-            <p className="text-background/70 text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Have a project in mind? I'd love to hear about it.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-5xl mx-auto">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="text-2xl font-heading font-bold mb-6">Send a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Your Name</label>
-                  <Input placeholder="Fatimah Abdulazeez" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required maxLength={100} className="rounded-lg" />
+                  <label className="text-sm font-medium mb-1.5 block text-foreground/70">Your Name</label>
+                  <Input placeholder="Fatimah Abdulazeez" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required maxLength={100} className="rounded-lg bg-card border-border" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Email Address</label>
-                  <Input type="email" placeholder="you@example.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required maxLength={255} className="rounded-lg" />
+                  <label className="text-sm font-medium mb-1.5 block text-foreground/70">Email Address</label>
+                  <Input type="email" placeholder="you@example.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required maxLength={255} className="rounded-lg bg-card border-border" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Your Message</label>
-                  <Textarea placeholder="Tell me about your project..." value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required maxLength={1000} rows={5} className="rounded-lg" />
+                  <label className="text-sm font-medium mb-1.5 block text-foreground/70">Your Message</label>
+                  <Textarea placeholder="Tell me about your project..." value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required maxLength={1000} rows={5} className="rounded-lg bg-card border-border" />
                 </div>
                 <Button type="submit" className="rounded-full px-8 w-full sm:w-auto" disabled={sending}>
                   {sending ? "Sending..." : "Send Message"} <Send className="ml-2" size={16} />
@@ -87,7 +89,7 @@ const Contact = () => {
                       <info.icon size={20} className="text-primary" />
                     </div>
                     {info.href ? (
-                      <a href={info.href} target={info.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
+                      <a href={info.href} target={info.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                         {info.label}
                       </a>
                     ) : (
