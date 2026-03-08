@@ -63,7 +63,7 @@ const About = () => {
                   animate={{ rotate: -360 }}
                   transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
                 />
-                <BlobImage src={headshot} alt={name} className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80" />
+                <BlobImage src={aboutHeadshot} alt={name} className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80" />
               </div>
             </motion.div>
             <motion.div

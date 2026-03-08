@@ -234,7 +234,7 @@ const Index = () => {
                   animate={{ rotate: 360 }}
                   transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                 />
-                <BlobImage src={headshot} alt="Fatimah Abdulazeez" className="w-48 h-48 md:w-60 md:h-60" variant={2} />
+                <BlobImage src={creatorHeadshot} alt="Fatimah Abdulazeez" className="w-48 h-48 md:w-60 md:h-60" variant={2} />
               </div>
             </motion.div>
 
