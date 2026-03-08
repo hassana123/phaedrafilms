@@ -17,13 +17,27 @@ const About = () => {
     <Layout>
       {/* Hero */}
       <section className="py-20 md:py-28 relative overflow-hidden">
-        <GeoShapes />
+        <GeoShapes variant={3} />
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-            <BlobImage src={headshot} alt="Fatimah Abdulazeez" className="w-56 h-56 md:w-72 md:h-72 flex-shrink-0" />
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <p className="text-primary font-medium tracking-widest uppercase text-sm mb-3">About Me</p>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-6">Fatimah Abdulazeez</h1>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <motion.div
+                className="absolute -inset-6 border border-primary/10 rounded-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              />
+              <BlobImage src={headshot} alt="Fatimah Abdulazeez" className="w-56 h-56 md:w-72 md:h-72 flex-shrink-0" />
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}>
+              <p className="text-primary font-medium tracking-[0.25em] uppercase text-sm mb-3">About Me</p>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4">Fatimah Abdulazeez</h1>
+              <motion.div className="w-16 h-0.5 bg-primary mb-6" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.6 }} style={{ transformOrigin: "left" }} />
               <p className="text-muted-foreground leading-relaxed text-lg">
                 Visual storyteller, voice-over artist, and aspiring filmmaker based in Nigeria.
               </p>
@@ -33,7 +47,8 @@ const About = () => {
       </section>
 
       {/* Story */}
-      <section className="py-16 md:py-24 bg-card">
+      <section className="py-16 md:py-24 bg-card relative overflow-hidden">
+        <div className="line-accent mb-16" />
         <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
           <SectionHeading title="My Story" />
           <motion.div
@@ -51,8 +66,8 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="py-16 md:py-24 relative">
-        <GeoShapes className="opacity-40" />
+      <section className="py-16 md:py-24 relative overflow-hidden">
+        <GeoShapes variant={2} className="opacity-30" />
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <SectionHeading title="My Approach" subtitle="Guiding principles behind every project." />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -63,13 +78,17 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.15 }}
-                className="text-center bg-card border border-border rounded-2xl p-8"
+                whileHover={{ y: -6 }}
+                className="text-center bg-card border border-border rounded-2xl p-8 group hover:border-primary/30 transition-all relative overflow-hidden"
               >
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5">
-                  <value.icon size={26} className="text-primary" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative z-10">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
+                    <value.icon size={26} className="text-primary" />
+                  </div>
+                  <h3 className="text-lg font-heading font-semibold mb-2">{value.title}</h3>
+                  <p className="text-muted-foreground text-sm">{value.description}</p>
                 </div>
-                <h3 className="text-lg font-heading font-semibold mb-2">{value.title}</h3>
-                <p className="text-muted-foreground text-sm">{value.description}</p>
               </motion.div>
             ))}
           </div>
