@@ -182,7 +182,7 @@ const Index = () => {
                 transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
               />
               <BlobImage
-                src={cameraPhoto}
+                src={heroImage}
                 alt="Fatimah with camera"
                 className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[26rem] lg:h-[26rem] xl:w-[30rem] xl:h-[30rem]"
               />
