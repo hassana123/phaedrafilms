@@ -79,7 +79,7 @@ const Index = () => {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="rounded-full text-base px-8 border-background/30 text-background hover:bg-background/10"
+                  className="rounded-full text-base px-8 border-background/30 bg-transparent text-background hover:bg-background/10"
                 >
                   <Link to="/portfolio">
                     View Work <ArrowRight className="ml-2" size={18} />
