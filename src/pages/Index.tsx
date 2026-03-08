@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Camera, Film, Video, Quote, Play } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Camera, Film, Video, Quote, Play, ChevronLeft, ChevronRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import BlobImage from "@/components/BlobImage";
 import SectionHeading from "@/components/SectionHeading";
@@ -11,7 +11,7 @@ import headshot from "@/assets/headshot.png";
 import portfolio1 from "@/assets/portfolio-1.png";
 import portfolio2 from "@/assets/portfolio-2.png";
 import portfolio3 from "@/assets/portfolio-3.png";
-import { useRef } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 
 const services = [
   { icon: Camera, title: "Event Coverage", description: "Professional video coverage for conferences, workshops, community programs, and special events.", num: "01" },
