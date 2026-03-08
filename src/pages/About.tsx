@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Heart, Eye, Target, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/Layout";
 import BlobImage from "@/components/BlobImage";
 import SectionHeading from "@/components/SectionHeading";
