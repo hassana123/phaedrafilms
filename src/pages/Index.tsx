@@ -224,15 +224,7 @@ const Index = () => {
               transition={{ duration: 0.7 }}
               className="md:col-span-8"
             >
-              <p className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-primary mb-4">The Creator</p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-6 leading-[1.1]">
-                Hi, I'm <span className="text-gradient">Fatimah</span>
-              </h2>
-              <p className="text-muted-foreground leading-relaxed text-base md:text-lg max-w-xl">
-                I am a visual storyteller, voice-over artist, and aspiring filmmaker. I started my
-                journey as a spoken word artist, and over time that love for storytelling grew into
-                scriptwriting, videography, and filmmaking.
-              </p>
+              <CreatorContent />
               <Link
                 to="/about"
                 className="inline-flex items-center gap-2 text-primary font-medium mt-6 text-sm group"
