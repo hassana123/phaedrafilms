@@ -12,6 +12,8 @@ import portfolio1 from "@/assets/portfolio-1.png";
 import portfolio2 from "@/assets/portfolio-2.png";
 import portfolio3 from "@/assets/portfolio-3.png";
 import { useRef, useState, useCallback, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const services = [
   { icon: Camera, title: "Event Coverage", description: "Professional video coverage for conferences, workshops, community programs, and special events.", num: "01" },
