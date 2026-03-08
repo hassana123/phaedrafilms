@@ -338,39 +338,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ─── TESTIMONIALS ─── */}
-      <section className="py-20 md:py-32 bg-card/50 relative overflow-hidden">
-        <GeoShapes variant={1} className="opacity-20" />
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <SectionHeading label="Testimonials" title="What Clients Say" subtitle="Kind words from those I've had the pleasure of working with." />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {[1, 2, 3].map((i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="glass-card p-8 relative group"
-              >
-                <Quote size={32} className="text-primary/[0.08] absolute top-6 right-6 group-hover:text-primary/15 transition-colors" />
-                <div className="flex gap-1 mb-5">
-                  {[1,2,3,4,5].map(s => (
-                    <div key={s} className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-                  ))}
-                </div>
-                <p className="text-foreground/70 italic text-sm leading-relaxed mb-6">
-                  "Testimonial coming soon — this space will showcase real client feedback."
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary text-xs font-bold">C{i}</span>
-                  </div>
-                  <div>
-                    <p className="text-foreground font-medium text-sm">Client {i}</p>
-                    <p className="text-muted-foreground text-xs">Project Partner</p>
-                  </div>
+      {/* ─── TESTIMONIALS SLIDER ─── */}
+      <TestimonialsSlider />
                 </div>
               </motion.div>
             ))}
