@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, Instagram, MapPin, Send } from "lucide-react";
+import { Mail, Phone, Instagram, MapPin, Send, ArrowUpRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import GeoShapes from "@/components/GeoShapes";
 import { Button } from "@/components/ui/button";
@@ -40,63 +40,155 @@ const Contact = () => {
 
   return (
     <Layout>
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        <GeoShapes />
-        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="text-primary font-medium tracking-widest uppercase text-sm mb-3">Contact</p>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-6">Let's Work Together</h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Have a project in mind? I'd love to hear about it.
+      {/* Hero */}
+      <section className="py-24 md:py-36 relative overflow-hidden">
+        <GeoShapes variant={3} />
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <motion.div
+            className="max-w-3xl"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <p className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-primary mb-4">Contact</p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-[1.05]">
+              Let's Work<br />
+              <span className="text-gradient">Together</span>
+            </h1>
+            <p className="text-muted-foreground text-base md:text-lg max-w-lg leading-relaxed">
+              Have a project in mind? I'd love to hear your story and bring it to life.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      {/* Form + Info */}
+      <section className="py-16 md:py-28">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-5xl mx-auto">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="text-2xl font-heading font-bold mb-6">Send a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block text-foreground/70">Your Name</label>
-                  <Input placeholder="Fatimah Abdulazeez" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required maxLength={100} className="rounded-lg bg-card border-border" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 max-w-6xl mx-auto">
+            {/* Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-7"
+            >
+              <p className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-primary mb-6">Send a Message</p>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="text-xs font-mono tracking-wider uppercase text-muted-foreground mb-2 block">
+                      Your Name
+                    </label>
+                    <Input
+                      placeholder="Fatimah Abdulazeez"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                      maxLength={100}
+                      className="rounded-xl bg-card border-border/60 h-12 focus:border-primary/50 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono tracking-wider uppercase text-muted-foreground mb-2 block">
+                      Email Address
+                    </label>
+                    <Input
+                      type="email"
+                      placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                      maxLength={255}
+                      className="rounded-xl bg-card border-border/60 h-12 focus:border-primary/50 transition-colors"
+                    />
+                  </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block text-foreground/70">Email Address</label>
-                  <Input type="email" placeholder="you@example.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required maxLength={255} className="rounded-lg bg-card border-border" />
+                  <label className="text-xs font-mono tracking-wider uppercase text-muted-foreground mb-2 block">
+                    Your Message
+                  </label>
+                  <Textarea
+                    placeholder="Tell me about your project, your vision, and the story you want to tell..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    required
+                    maxLength={1000}
+                    rows={6}
+                    className="rounded-xl bg-card border-border/60 focus:border-primary/50 transition-colors resize-none"
+                  />
                 </div>
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block text-foreground/70">Your Message</label>
-                  <Textarea placeholder="Tell me about your project..." value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required maxLength={1000} rows={5} className="rounded-lg bg-card border-border" />
-                </div>
-                <Button type="submit" className="rounded-full px-8 w-full sm:w-auto" disabled={sending}>
-                  {sending ? "Sending..." : "Send Message"} <Send className="ml-2" size={16} />
+                <Button
+                  type="submit"
+                  className="rounded-full px-8 h-12 w-full sm:w-auto glow-sm group"
+                  disabled={sending}
+                >
+                  {sending ? "Sending..." : "Send Message"}
+                  <Send className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
                 </Button>
               </form>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="text-2xl font-heading font-bold mb-6">Get in Touch</h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
+            {/* Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="lg:col-span-5"
+            >
+              <p className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-primary mb-6">Get in Touch</p>
+              <p className="text-muted-foreground mb-10 leading-relaxed text-sm md:text-base">
                 Whether you're looking to document an event, create content for your brand, or tell an impactful story — I'm here to help bring your vision to life.
               </p>
               <div className="space-y-5">
                 {contactInfo.map((info) => (
-                  <div key={info.label} className="flex items-center gap-4">
-                    <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <info.icon size={20} className="text-primary" />
-                    </div>
+                  <motion.div
+                    key={info.label}
+                    whileHover={{ x: 4 }}
+                    className="group"
+                  >
                     {info.href ? (
-                      <a href={info.href} target={info.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                        {info.label}
+                      <a
+                        href={info.href}
+                        target={info.href.startsWith("http") ? "_blank" : undefined}
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-4"
+                      >
+                        <div className="w-11 h-11 rounded-xl border border-border flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/5 transition-all shrink-0">
+                          <info.icon size={18} className="text-primary" />
+                        </div>
+                        <span className="text-sm text-foreground/60 group-hover:text-foreground transition-colors break-all">
+                          {info.label}
+                        </span>
                       </a>
                     ) : (
-                      <span className="text-sm text-muted-foreground">{info.label}</span>
+                      <div className="flex items-center gap-4">
+                        <div className="w-11 h-11 rounded-xl border border-border flex items-center justify-center shrink-0">
+                          <info.icon size={18} className="text-primary" />
+                        </div>
+                        <span className="text-sm text-foreground/60">{info.label}</span>
+                      </div>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
+              </div>
+
+              {/* Social CTA */}
+              <div className="mt-12 p-6 glass-card">
+                <p className="text-sm font-medium mb-2">Follow the journey</p>
+                <p className="text-xs text-muted-foreground mb-4">Behind-the-scenes, new projects, and creative process.</p>
+                <a
+                  href="https://instagram.com/phaedrafilms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary text-sm font-medium group"
+                >
+                  <Instagram size={16} />
+                  @phaedrafilms
+                  <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </a>
               </div>
             </motion.div>
           </div>
