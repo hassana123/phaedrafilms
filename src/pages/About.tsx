@@ -28,7 +28,7 @@ const About = () => {
     queryFn: async () => {
       const { data, error } = await supabase.from("site_content").select("*").eq("section_key", "about").maybeSingle();
       if (error) throw error;
-      return data?.content as { name?: string; about_description?: string } | null;
+      return data?.content as { name?: string; about_description?: string; headshot_image?: string } | null;
     },
   });
 

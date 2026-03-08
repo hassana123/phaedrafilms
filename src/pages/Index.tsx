@@ -43,6 +43,27 @@ const Index = () => {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
 
+  const { data: heroContent } = useQuery({
+    queryKey: ["site-content-hero"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("site_content").select("*").eq("section_key", "hero").maybeSingle();
+      if (error) throw error;
+      return data?.content as { hero_image?: string } | null;
+    },
+  });
+
+  const { data: aboutContent } = useQuery({
+    queryKey: ["site-content-about"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("site_content").select("*").eq("section_key", "about").maybeSingle();
+      if (error) throw error;
+      return data?.content as { headshot_image?: string } | null;
+    },
+  });
+
+  const heroImage = heroContent?.hero_image || cameraPhoto;
+  const creatorHeadshot = aboutContent?.headshot_image || headshot;
+
   return (
     <Layout>
       {/* ─── HERO ─── */}
