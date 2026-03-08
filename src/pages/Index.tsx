@@ -340,13 +340,126 @@ const Index = () => {
 
       {/* ─── TESTIMONIALS SLIDER ─── */}
       <TestimonialsSlider />
+    </Layout>
+  );
+};
+
+const testimonials = [
+  { quote: "Fatimah captured our event beautifully. Every frame told a story we didn't even know was there.", name: "Amina R.", role: "Event Organizer" },
+  { quote: "Working with Phaedra Films was an absolute dream. The final product exceeded all expectations.", name: "David K.", role: "Brand Director" },
+  { quote: "She has an incredible eye for detail and a gift for making people feel comfortable on camera.", name: "Sarah M.", role: "Non-Profit Lead" },
+  { quote: "The documentary she produced for our community project brought real change. Powerful storytelling.", name: "James O.", role: "Community Director" },
+  { quote: "Professional, creative, and deeply passionate about her craft. Highly recommend Phaedra Films.", name: "Lila T.", role: "Marketing Manager" },
+];
+
+const TestimonialsSlider = () => {
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startAutoplay = useCallback(() => {
+    intervalRef.current = setInterval(() => {
+      setDirection(1);
+      setCurrent((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+  }, []);
+
+  useEffect(() => {
+    startAutoplay();
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [startAutoplay]);
+
+  const go = (dir: number) => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setDirection(dir);
+    setCurrent((prev) => (prev + dir + testimonials.length) % testimonials.length);
+    startAutoplay();
+  };
+
+  const variants = {
+    enter: (d: number) => ({ x: d > 0 ? 300 : -300, opacity: 0, scale: 0.95 }),
+    center: { x: 0, opacity: 1, scale: 1 },
+    exit: (d: number) => ({ x: d > 0 ? -300 : 300, opacity: 0, scale: 0.95 }),
+  };
+
+  return (
+    <section className="py-20 md:py-32 bg-card/50 relative overflow-hidden">
+      <GeoShapes variant={1} className="opacity-20" />
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <SectionHeading label="Testimonials" title="What Clients Say" subtitle="Kind words from those I've had the pleasure of working with." />
+
+        <div className="max-w-3xl mx-auto">
+          {/* Slider */}
+          <div className="relative min-h-[280px] sm:min-h-[240px] flex items-center">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={current}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="glass-card p-8 md:p-12 relative w-full"
+              >
+                <Quote size={48} className="text-primary/10 absolute top-6 right-6" />
+                <div className="flex gap-1.5 mb-6">
+                  {[1,2,3,4,5].map(s => (
+                    <div key={s} className="w-1.5 h-1.5 rounded-full bg-primary/50" />
+                  ))}
+                </div>
+                <p className="text-foreground/80 italic text-base md:text-lg leading-relaxed mb-8">
+                  "{testimonials[current].quote}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary text-sm font-bold">{testimonials[current].name[0]}</span>
+                  </div>
+                  <div>
+                    <p className="text-foreground font-medium text-sm">{testimonials[current].name}</p>
+                    <p className="text-muted-foreground text-xs font-mono">{testimonials[current].role}</p>
+                  </div>
                 </div>
               </motion.div>
-            ))}
+            </AnimatePresence>
+          </div>
+
+          {/* Controls */}
+          <div className="flex items-center justify-center gap-6 mt-8">
+            <button
+              onClick={() => go(-1)}
+              className="w-10 h-10 rounded-full border border-border/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+            >
+              <ChevronLeft size={18} />
+            </button>
+
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    if (intervalRef.current) clearInterval(intervalRef.current);
+                    setDirection(i > current ? 1 : -1);
+                    setCurrent(i);
+                    startAutoplay();
+                  }}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === current ? "w-8 bg-primary" : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={() => go(1)}
+              className="w-10 h-10 rounded-full border border-border/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+            >
+              <ChevronRight size={18} />
+            </button>
           </div>
         </div>
-      </section>
-    </Layout>
+      </div>
+    </section>
   );
 };
 
