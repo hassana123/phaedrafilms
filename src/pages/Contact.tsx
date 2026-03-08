@@ -6,17 +6,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`New inquiry from ${formData.name}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
-    window.open(`mailto:phaedrafilmsproductions@gmail.com?subject=${subject}&body=${body}`);
-    toast({ title: "Opening your email client...", description: "Complete sending the message from your email app." });
+    setSending(true);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+    });
+    setSending(false);
+    if (error) {
+      toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
+      return;
+    }
+    toast({ title: "Message sent!", description: "Thank you for reaching out. I'll get back to you soon." });
+    setFormData({ name: "", email: "", message: "" });
   };
 
   const contactInfo = [
@@ -43,67 +54,31 @@ const Contact = () => {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-5xl mx-auto">
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="text-2xl font-heading font-bold mb-6">Send a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">Your Name</label>
-                  <Input
-                    placeholder="Fatimah Abdulazeez"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                    maxLength={100}
-                    className="rounded-lg"
-                  />
+                  <Input placeholder="Fatimah Abdulazeez" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required maxLength={100} className="rounded-lg" />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">Email Address</label>
-                  <Input
-                    type="email"
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                    maxLength={255}
-                    className="rounded-lg"
-                  />
+                  <Input type="email" placeholder="you@example.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required maxLength={255} className="rounded-lg" />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">Your Message</label>
-                  <Textarea
-                    placeholder="Tell me about your project..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
-                    maxLength={1000}
-                    rows={5}
-                    className="rounded-lg"
-                  />
+                  <Textarea placeholder="Tell me about your project..." value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required maxLength={1000} rows={5} className="rounded-lg" />
                 </div>
-                <Button type="submit" className="rounded-full px-8 w-full sm:w-auto">
-                  Send Message <Send className="ml-2" size={16} />
+                <Button type="submit" className="rounded-full px-8 w-full sm:w-auto" disabled={sending}>
+                  {sending ? "Sending..." : "Send Message"} <Send className="ml-2" size={16} />
                 </Button>
               </form>
             </motion.div>
 
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               <h2 className="text-2xl font-heading font-bold mb-6">Get in Touch</h2>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Whether you're looking to document an event, create content for your brand, or tell an impactful
-                story — I'm here to help bring your vision to life.
+                Whether you're looking to document an event, create content for your brand, or tell an impactful story — I'm here to help bring your vision to life.
               </p>
               <div className="space-y-5">
                 {contactInfo.map((info) => (
@@ -112,12 +87,7 @@ const Contact = () => {
                       <info.icon size={20} className="text-primary" />
                     </div>
                     {info.href ? (
-                      <a
-                        href={info.href}
-                        target={info.href.startsWith("http") ? "_blank" : undefined}
-                        rel="noopener noreferrer"
-                        className="text-sm hover:text-primary transition-colors"
-                      >
+                      <a href={info.href} target={info.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
                         {info.label}
                       </a>
                     ) : (
