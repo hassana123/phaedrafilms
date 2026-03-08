@@ -23,6 +23,21 @@ const milestones = [
 ];
 
 const About = () => {
+  const { data: aboutContent } = useQuery({
+    queryKey: ["site-content-about"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("site_content").select("*").eq("section_key", "about").maybeSingle();
+      if (error) throw error;
+      return data?.content as { name?: string; about_description?: string } | null;
+    },
+  });
+
+  const name = aboutContent?.name || "Fatimah Abdulazeez";
+  const description = aboutContent?.about_description || "Visual storyteller, voice-over artist, and aspiring filmmaker based in Nigeria. I believe stories, when told well, have the power to move people and shape how we see the world.";
+  const nameParts = name.split(" ");
+  const firstName = nameParts[0] || "Fatimah";
+  const lastName = nameParts.slice(1).join(" ") || "Abdulazeez";
+
   return (
     <Layout>
       {/* Hero */}
@@ -47,7 +62,7 @@ const About = () => {
                   animate={{ rotate: -360 }}
                   transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
                 />
-                <BlobImage src={headshot} alt="Fatimah Abdulazeez" className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80" />
+                <BlobImage src={headshot} alt={name} className="w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80" />
               </div>
             </motion.div>
             <motion.div
@@ -58,11 +73,11 @@ const About = () => {
             >
               <p className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-primary mb-4">About Me</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold mb-6 leading-[1.05]">
-                Fatimah<br />
-                <span className="text-gradient">Abdulazeez</span>
+                {firstName}<br />
+                <span className="text-gradient">{lastName}</span>
               </h1>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg max-w-lg">
-                Visual storyteller, voice-over artist, and aspiring filmmaker based in Nigeria. I believe stories, when told well, have the power to move people and shape how we see the world.
+                {description}
               </p>
             </motion.div>
           </div>

@@ -338,6 +338,37 @@ const Index = () => {
   );
 };
 
+const CreatorContent = () => {
+  const { data: content } = useQuery({
+    queryKey: ["site-content-about"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("site_content").select("*").eq("section_key", "about").maybeSingle();
+      if (error) throw error;
+      return data?.content as { name?: string; creator_title?: string; creator_bio?: string } | null;
+    },
+  });
+
+  const title = content?.creator_title || "Hi, I'm Fatimah";
+  const bio = content?.creator_bio || "I am a visual storyteller, voice-over artist, and aspiring filmmaker. I started my journey as a spoken word artist, and over time that love for storytelling grew into scriptwriting, videography, and filmmaking.";
+  
+  // Extract the name after "I'm " for the gradient styling
+  const nameMatch = title.match(/I'm\s+(.+)/);
+  const nameOnly = nameMatch ? nameMatch[1] : "Fatimah";
+  const titlePrefix = nameMatch ? title.replace(nameOnly, "").trim() : title;
+
+  return (
+    <>
+      <p className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-primary mb-4">The Creator</p>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-6 leading-[1.1]">
+        {titlePrefix} <span className="text-gradient">{nameOnly}</span>
+      </h2>
+      <p className="text-muted-foreground leading-relaxed text-base md:text-lg max-w-xl">
+        {bio}
+      </p>
+    </>
+  );
+};
+
 const fallbackTestimonials = [
   { quote: "Fatimah captured our event beautifully. Every frame told a story we didn't even know was there.", client_name: "Amina R.", role: "Event Organizer" },
   { quote: "Working with Phaedra Films was an absolute dream. The final product exceeded all expectations.", client_name: "David K.", role: "Brand Director" },

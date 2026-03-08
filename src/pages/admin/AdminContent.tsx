@@ -10,7 +10,12 @@ import AdminLayout from "./AdminLayout";
 
 const defaultContent = {
   hero: { tagline: "Visual Storytelling Agency", headline: "Phaedra Films", subtitle: "Where creative vision meets impactful storytelling to elevate every message.", cta_text: "Book a Session" },
-  about: { title: "Hi, I'm Fatimah Abdulazeez", bio: "I am a visual storyteller, voice-over artist, and aspiring filmmaker..." },
+  about: {
+    name: "Fatimah Abdulazeez",
+    about_description: "Visual storyteller, voice-over artist, and aspiring filmmaker based in Nigeria. I believe stories, when told well, have the power to move people and shape how we see the world.",
+    creator_title: "Hi, I'm Fatimah",
+    creator_bio: "I am a visual storyteller, voice-over artist, and aspiring filmmaker. I started my journey as a spoken word artist, and over time that love for storytelling grew into scriptwriting, videography, and filmmaking.",
+  },
   contact: { email: "phaedrafilmsproductions@gmail.com", phone: "+234 906 753 8985", instagram: "@phaedrafilms", whatsapp: "2349067538985", location: "Nigeria" },
 };
 
