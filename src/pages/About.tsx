@@ -34,6 +34,7 @@ const About = () => {
 
   const name = aboutContent?.name || "Fatimah Abdulazeez";
   const description = aboutContent?.about_description || "Visual storyteller, voice-over artist, and aspiring filmmaker based in Nigeria. I believe stories, when told well, have the power to move people and shape how we see the world.";
+  const aboutHeadshot = aboutContent?.headshot_image || headshot;
   const nameParts = name.split(" ");
   const firstName = nameParts[0] || "Fatimah";
   const lastName = nameParts.slice(1).join(" ") || "Abdulazeez";
