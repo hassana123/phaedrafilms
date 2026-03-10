@@ -45,7 +45,7 @@ const Navbar = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 md:h-20">
             <Link to="/" className="flex items-center relative z-[60]">
-              <img src={logo} alt="Phaedra Films" className="h-10 md:h-12" />
+              <img src={logo} alt="Phaedra Films" className="h-[170px] md:h-36" />
             </Link>
 
             {/* Desktop Nav */}
@@ -120,6 +120,13 @@ const Navbar = () => {
             transition={{ duration: 0.4 }}
             className="fixed inset-0 z-[55] bg-background flex flex-col justify-center"
           >
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 z-[60] w-10 h-10 flex items-center justify-center text-foreground hover:text-primary transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={24} />
+            </button>
             {/* Decorative background */}
             <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-primary/5 blur-[80px]" />
             <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-primary/5 blur-[60px]" />
